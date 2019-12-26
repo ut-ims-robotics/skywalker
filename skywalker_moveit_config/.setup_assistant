@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: skywalker
+    relative_path: description/urdf/skywalker.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/skywalker.srdf
+  CONFIG:
+    author_name: usman
+    author_email: usman1476@gmail.com
+    generated_timestamp: 1574193858

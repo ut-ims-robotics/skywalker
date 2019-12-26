@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="gui" default="true" />
+
+  <include file="$(find skywalker)/launch/skywalker_empty_world.launch">
+    <arg name="gui" value="$(arg gui)" />
+  </include>
+
+  <include file="$(find skywalker)/launch/includes/spawn_maze.launch.xml" />
+</launch>

@@ -1,0 +1,9 @@
+#goal definition
+float64 goal
+---
+#result definition
+float64[] result
+---
+#feedback
+float64[] feedback
+	
