@@ -211,14 +211,10 @@ add_executable(action_server src/action_server.cpp)
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-add_executable(skywalker_driver src/skywalker_driver.cpp)
-target_link_libraries(skywalker_driver ${catkin_LIBRARIES})
 add_executable(skywalker_teleop src/skywalker_teleop.cpp)
 target_link_libraries(skywalker_teleop ${catkin_LIBRARIES})
 add_executable(skywalker_joint_state src/skywalker_joint_state.cpp)
 target_link_libraries(skywalker_joint_state ${catkin_LIBRARIES})
-add_executable(simple_trajectory src/simple_trajectory.cpp)
-target_link_libraries(simple_trajectory ${catkin_LIBRARIES})
 add_executable(skywalker_simple_drive src/skywalker_simple_drive.cpp)
 target_link_libraries(skywalker_simple_drive ${catkin_LIBRARIES})
 

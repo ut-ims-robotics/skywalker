@@ -6,5 +6,6 @@
     <arg name="gui" value="$(arg gui)" />
   </include>
 
-  <include file="$(find skywalker)/launch/includes/spawn_maze.launch.xml" />
+  <include file="$(find mir_gazebo)/launch/includes/spawn_maze.launch.xml" />
+  
 </launch>

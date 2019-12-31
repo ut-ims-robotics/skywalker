@@ -1,12 +1,7 @@
 <?xml version="1.0" ?>
 <launch>
   
-  <!--arg name="paused" default="false" doc="Starts gazebo in paused mode" /-->
-  <!--arg name="gui" default="true" doc="Starts gazebo gui" /-->
-  <!--arg name="file" default="$(find motion_planning)/sample_data/dataset.csv" />
-  <arg name="rate" default="20" /-->
-
-
+  
   <arg name="gui" default="true" />
   <arg name="world_name" default="worlds/empty.world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable, but can also be an absolute path -->
 
@@ -29,7 +24,6 @@
   <!-- Add passive + mimic joints to joint_states topic -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <rosparam param="source_list">[mir/joint_states]</rosparam>
-    <!--rosparam param="source_list">[motion_plan_player/joint_states]</rosparam-->
     <param name="rate" value="200.0" />
   </node>
 
@@ -40,9 +34,5 @@
     <arg name="robot_yaw" value="$(arg robot_yaw)" />
   </include>
 
-  <!--node name="motion_plan_player" pkg="motion_planning" type="motion_plan_player_node" output="screen">
-    <param name="file" value="$(arg file)" />
-    <param name="rate" value="$(arg rate)" />
-  </node-->
 
 </launch>
