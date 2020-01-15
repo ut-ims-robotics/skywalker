@@ -3,6 +3,12 @@
 #include <actionlib/client/simple_action_client.h>
 #include "geometry_msgs/Twist.h"
 #include <stdlib.h>
+// Include standard libraries
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <string>
 
 typedef actionlib::SimpleActionClient< control_msgs::FollowJointTrajectoryAction > TrajClient;
 
@@ -40,8 +46,8 @@ public:
     traj_client_->sendGoal(goal);
   }
 
-  //! Generates a simple trajectory with two waypoints, used as an example
-  /*! Note that this trajectory contains two waypoints, joined together
+  //! Generates a simple trajectory with i-th waypoints, used as an example
+  /*! Note that this trajectory contains i-th waypoints, joined together
       as a single trajectory. Alternatively, each of these waypoints could
       be in its own trajectory - a trajectory can have one or more waypoints
       depending on the desired application.
@@ -50,55 +56,71 @@ public:
   {
     //our goal variable
     control_msgs::FollowJointTrajectoryGoal goal;
+    // Global vector q .........vector to save joint values 
+    std::vector<float> q;
 
-    // First, the joint names, which apply to all waypoints
+    // open csv file for reading
+        
+    std::fstream file("q_computed.csv", std::ios::in);
+   
+    std::string line = "";    
+    while (getline(file, line))
+    {
+      std::stringstream linestream(line);
+      std::string value;
+      //std::vector<double> q;
+      // parse the line (comma separated joint states)
+      while (getline(linestream, value, ','))
+      {
+        float val = std::strtof(value.c_str(), NULL);
+        q.push_back(val);        
+      }
+    }
+
+
+    //The joint names, which apply to all waypoints
     goal.trajectory.joint_names.push_back("ur5e_shoulder_pan_joint");
     goal.trajectory.joint_names.push_back("ur5e_shoulder_lift_joint");
     goal.trajectory.joint_names.push_back("ur5e_elbow_joint");
     goal.trajectory.joint_names.push_back("ur5e_wrist_1_joint");
     goal.trajectory.joint_names.push_back("ur5e_wrist_2_joint");
     goal.trajectory.joint_names.push_back("ur5e_wrist_3_joint");
-    
-    // We will have two waypoints in this goal trajectory
-    goal.trajectory.points.resize(2);
 
-    // First trajectory point
-    // Positions
-    int ind = 0;
-    goal.trajectory.points[ind].positions.resize(6);
-    goal.trajectory.points[ind].positions[0] = 0.0;
-    goal.trajectory.points[ind].positions[1] = 0.0;
-    goal.trajectory.points[ind].positions[2] = 0.0;
-    goal.trajectory.points[ind].positions[3] = 0.0;
-    goal.trajectory.points[ind].positions[4] = 0.0;
-    goal.trajectory.points[ind].positions[5] = 0.0;
-    // Velocities
-    goal.trajectory.points[ind].velocities.resize(6);
-    for (size_t j = 0; j < 6; ++j)
-    {
-      goal.trajectory.points[ind].velocities[j] = 0.0;
-    }
-    // To be reached 1 second after starting along the trajectory
-    goal.trajectory.points[ind].time_from_start = ros::Duration(1.0);
+    // We will have [q.size()/6] waypoints in this goal trajectory
+    goal.trajectory.points.resize(q.size()/6);
 
-    // Second trajectory point
-    // Positions
-    ind += 1;
-    goal.trajectory.points[ind].positions.resize(6);
-    goal.trajectory.points[ind].positions[0] = -0.3;
-    goal.trajectory.points[ind].positions[1] = 0.2;
-    goal.trajectory.points[ind].positions[2] = -1.1;
-    goal.trajectory.points[ind].positions[3] = -1.2;
-    goal.trajectory.points[ind].positions[4] = 1.5;
-    goal.trajectory.points[ind].positions[5] = -1.3;
-    // Velocities
-    goal.trajectory.points[ind].velocities.resize(6);
-    for (size_t j = 0; j < 6; ++j)
-    {
-      goal.trajectory.points[ind].velocities[j] = 0.0;
-    }
-    // To be reached 2 seconds after starting along the trajectory
-    goal.trajectory.points[ind].time_from_start = ros::Duration(2.0);
+    //cout<<"q_size::"<<q.size()/6;
+
+    for (int i = 0 ; i < q.size()/6; i++)
+    { 
+      std::cout << " Print the Joints values q1 to q6"<< '\n' <<std::endl;
+      std::cout << q[0+6*i] << std::endl;
+      std::cout << q[1+6*i] << std::endl;
+      std::cout << q[2+6*i] << std::endl;
+      std::cout << q[3+6*i] << std::endl;
+      std::cout << q[4+6*i] << std::endl;
+      std::cout << q[5+6*i] << '\n'<< std::endl;        
+ 
+      // // i-th trajectory point
+      // // Positions
+        
+      goal.trajectory.points[i].positions.resize(6);
+      goal.trajectory.points[i].positions[0] = q[0+6*i];
+      goal.trajectory.points[i].positions[1] = q[1+6*i];
+      goal.trajectory.points[i].positions[2] = q[2+6*i];
+      goal.trajectory.points[i].positions[3] = q[3+6*i];
+      goal.trajectory.points[i].positions[4] = q[4+6*i];
+      goal.trajectory.points[i].positions[5] = q[5+6*i];
+      // Velocities
+      goal.trajectory.points[i].velocities.resize(6);
+      for (size_t j = 0; j < 6; ++j)
+      {
+        goal.trajectory.points[i].velocities[j] = 0.0;
+      }
+      //To be reached  [(i+1.0)*(0.1)] seconds after starting along the trajectory
+      goal.trajectory.points[i].time_from_start = ros::Duration((i+1.0)*(0.1));
+           
+    }  
 
     //we are done; return the goal
     return goal;
@@ -114,64 +136,58 @@ public:
 
 int main(int argc, char **argv)
 {
- // Initiate new ROS node named "skywalker_drive"
- ros::init(argc, argv, "skywalker_simple_drive");
- ros::NodeHandle n;
+  // Initiate new ROS node named "skywalker_drive"
+  ros::init(argc, argv, "skywalker_simple_drive");
+  ros::NodeHandle n;
 
- //Ceates the publisher, and tells it to publish
-     //to the /cmd_vel topic, with a queue size of 1000
- ros::Publisher velocity_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
- ros::Rate loop_rate(1); //1 message per second
+  //Ceates the publisher, and tells it to publish
+  //to the /cmd_vel topic, with a queue size of 1000
+  ros::Publisher velocity_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
+  ros::Rate loop_rate(1); //1 message per second
 
-     //Sets up the random number generator
-     srand(time(0));
+  //Sets up the random number generator
+  srand(time(0));
 
-     //Sets the loop to publish at a rate of 10Hz
-     ros::Rate rate(10);
-   skywalker_manipulator arm;
-   while (ros::ok()) // Keep spinning loop until user presses Ctrl+C
-   {
-    
-    // Start the trajectory
-    
-    // Wait for trajectory completion
-    
-
-
+  //Sets the loop to publish at a rate of 10Hz
+  ros::Rate rate(10);
+  skywalker_manipulator arm;
+  while (ros::ok()) // Keep spinning loop until user presses Ctrl+C
+  {    
+      
+     
     geometry_msgs::Twist vel_msg;
     //set a random linear velocity in the x-axis
     //vel_msg.linear.x =(double)(rand() % 10 +1)/4.0;
     vel_msg.linear.x = 0.2;
-    //vel_msg.linear.x =-2;
-    //vel_msg.linear.y =0;
-    //vel_msg.linear.z =0;
-    //set a random angular velocity in the y-axis
-    //vel_msg.angular.x = 0;
-    //vel_msg.angular.y = 0;
+    //set a random angular velocity in the z-axis
     //vel_msg.angular.z =(double)(rand() % 10 - 5)/2.0;
     vel_msg.angular.z = 0.2;
 
     //print the content of the message in the terminal
-     ROS_INFO("[Random Walk] linear.x = %.2f, angular.z=%.2f\n", vel_msg.linear.x, vel_msg.angular.z);
-     //ROS_INFO("[Random Walk] linear.x = %.2f\n", vel_msg.linear.x);
+    ROS_INFO("[Random Walk] linear.x = %.2f, angular.z=%.2f\n", vel_msg.linear.x, vel_msg.angular.z);
+    //ROS_INFO("[Random Walk] linear.x = %.2f\n", vel_msg.linear.x);
     //publish the message
-     
-     
-     if(!arm.getState().isDone())
-     {
-       // usleep(4000000);
-       velocity_publisher.publish(vel_msg);
-        
-      }
-      else
-      {
-        arm.startTrajectory(arm.armExtensionTrajectory());
-        velocity_publisher.publish(vel_msg);
-      }
-    ros::spinOnce(); // Need to call this function often to allow ROS to process incoming messages
-   }
-   
-   return 0;
+
+    // Wait for trajectory completion          
+    if(!arm.getState().isDone())
+    {
+      
+      //usleep(1000);
+      //velocity_publisher.publish(vel_msg);
+      std::cout<<"Trying to complete trajectory "<<'\n'<<std::endl;
+      
+    }
+    else
+    {
+      // Start the trajectory
+      arm.startTrajectory(arm.armExtensionTrajectory());
+      velocity_publisher.publish(vel_msg);
+    }
+    
+  ros::spinOnce(); // Need to call this function often to allow ROS to process incoming messages
+  }
+  
+  return 0;
 }
 
 
