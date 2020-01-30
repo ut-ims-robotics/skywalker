@@ -13,19 +13,19 @@ def forward_kinem_franka(q):
 	alpha5 = -pi/2
 	alpha6 =  0.0
 
-	d1 = 0.089159
+	d1 = 0.1625
 	d2 = 0.0				
 	d3 = 0.0
-	d4 = 0.10915
-	d5 = 0.09465
-	d6 = 0.0823
+	d4 = 0.1333
+	d5 = 0.0997
+	d6 = 0.0996
 	
 	
 	
 
 	a1 = 0.0
-	a2 = -0.42500
-	a3 = -0.39225
+	a2 = -0.425
+	a3 = -0.3922
 	a4 = 0.0
 	a5 = 0.0
 	a6 = 0.0
@@ -75,9 +75,18 @@ def forward_kinem_franka(q):
 	
 	
 		
-	vec_x = T_fin[0][3]
-	vec_y = T_fin[1][3]
-	vec_z = T_fin[2][3]
+	#vec_x = T_fin[0][3]
+	#vec_y = T_fin[1][3]
+	#vec_z = T_fin[2][3]
+
+	vec_x = T_fin[0][3]-0.26235
+	vec_y = T_fin[1][3]+0.1
+	vec_z = T_fin[2][3]+0.842
+	## ee_link position 
+	#vec_x = T_fin[0][3]+(0.55488)
+	#vec_y = T_fin[1][3]+(0.33418)
+	#vec_z = T_fin[2][3]+(0.90771)
+	
 
 	R_fin = T_fin[0:3, 0:3]
 

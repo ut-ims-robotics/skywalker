@@ -97,7 +97,7 @@ class MoveGroupPythonIntefaceTutorial(object):
 if __name__ == '__main__':    
   tutorial = MoveGroupPythonIntefaceTutorial()
   counter =10
-  f = open('/home/usman/usman-ros/src/skywalker/skywalker/src/joint_positions.csv', 'w')
+  f = open('/home/usman/usman-ros/src/skywalker/skywalker/src/end_pos_pose.csv', 'w')
   writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
   try:
     group_name = "manipulator"

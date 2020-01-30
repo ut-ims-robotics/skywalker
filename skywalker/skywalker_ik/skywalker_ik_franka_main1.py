@@ -12,7 +12,7 @@ import csv
 
 
 
-my_data = genfromtxt('end_pos_pose_2.csv', delimiter=',')
+my_data = genfromtxt('end_pos_pose.csv', delimiter=',')
 
 x_end = my_data[:,0] ############# x position of the end effector
 y_end = my_data[:,1] ########## Y position of the end effector
@@ -76,9 +76,9 @@ for i in range(len(my_data)):
 	q.append(theta_compute)
 	print q
 	
-	#with open('theta_compute.csv', mode='w') as joint_angles:
-		#joint_angles = csv.writer(joint_angles, delimiter=',')
-	        # joint_angles.writerows(q)
+	with open('q_computed.csv', mode='w') as joint_angles:
+		joint_angles = csv.writer(joint_angles, delimiter=',')
+	        joint_angles.writerows(q)
 
 
 	

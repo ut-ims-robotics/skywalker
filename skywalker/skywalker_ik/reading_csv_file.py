@@ -8,8 +8,8 @@ from mpl_toolkits.mplot3d import Axes3D
 
 
 
-#my_data = genfromtxt('end_pos_pose.csv', delimiter=',')
-my_data = genfromtxt('joint_angles.csv', delimiter=',')
+my_data = genfromtxt('end_pos_pose.csv', delimiter=',')
+#my_data = genfromtxt('joint_angles.csv', delimiter=',')
 
 x_end = my_data[:,0] ############# x position of the end effector
 y_end = my_data[:,1] ########## Y position of the end effector

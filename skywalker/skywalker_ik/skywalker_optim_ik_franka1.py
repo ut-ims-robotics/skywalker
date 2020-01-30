@@ -23,20 +23,20 @@ def optim_ik_franka(theta_init, x_e, y_e, z_e, R_e, theta_min, theta_max):
 		alpha4 = np.pi/2
 		alpha5 = -np.pi/2
 		alpha6 =  0.0
-		
-		d1 = 0.089159
+
+		d1 = 0.1625
 		d2 = 0.0				
 		d3 = 0.0
-		d4 = 0.10915
-		d5 = 0.09465
-		d6 = 0.0823
+		d4 = 0.1333
+		d5 = 0.0997
+		d6 = 0.0996
 		
 		
-		
-    
+	
+
 		a1 = 0.0
-		a2 = -0.42500
-		a3 = -0.39225
+		a2 = -0.425
+		a3 = -0.3922
 		a4 = 0.0
 		a5 = 0.0
 		a6 = 0.0
@@ -100,9 +100,16 @@ def optim_ik_franka(theta_init, x_e, y_e, z_e, R_e, theta_min, theta_max):
 		
 		
 			
-		vec_x = T_fin[0][3]
-		vec_y = T_fin[1][3]
-		vec_z = T_fin[2][3]
+		#vec_x = T_fin[0][3]
+		#vec_y = T_fin[1][3]
+		#vec_z = T_fin[2][3]
+		vec_x = T_fin[0][3]-0.26235
+		vec_y = T_fin[1][3]+0.1
+		vec_z = T_fin[2][3]+0.842
+		## ee_link position 
+		#vec_x = T_fin[0][3]+(0.55488)
+		#vec_y = T_fin[1][3]+(0.33418)
+		#vec_z = T_fin[2][3]+(0.90771)
 
 		R= T_fin[0:3, 0:3]
 
@@ -124,7 +131,7 @@ def optim_ik_franka(theta_init, x_e, y_e, z_e, R_e, theta_min, theta_max):
 		#f = np.linalg.norm(q-theta_init)
 		f = np.dot((q-theta_init).T, (q-theta_init))
 
-		cost = 10*(vec_x-x_e)**2+10*(vec_y-y_e)**2+10*(vec_z-z_e)**2+(tr-tr_actual)**2+(ax1-ax1_actual)**2+(ax2-ax2_actual)**2+(ax3-ax3_actual)**2+0.1*f
+		cost = 100*(vec_x-x_e)**2+100*(vec_y-y_e)**2+100*(vec_z-z_e)**2+(tr-tr_actual)**2+(ax1-ax1_actual)**2+(ax2-ax2_actual)**2+(ax3-ax3_actual)**2+0.01*f
 
 		return cost
 

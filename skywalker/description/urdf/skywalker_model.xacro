@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="skywalker" >
 <!-- mir100-->
 <xacro:include filename="$(find mir_description)/urdf/include/mir_100_v1.urdf.xacro" />
 <xacro:mir_100 prefix=""/>
@@ -42,7 +42,8 @@
   <joint name="box_ur5e" type="fixed">
     <parent link="box_link"/>
     <child link="ur5e_base_link"/>
-    <origin xyz="-0.3 0.1 0.245" rpy="0 0 0"/>
+    <!--origin xyz="-0.3 0.1 0.245" rpy="0 0 0"/-->
+        <origin xyz="-0.3 0.1 0.245" rpy="0 0 0"/>
   </joint>
    
 <!--joint name="ur5e_robotiq" type="fixed">

@@ -61,7 +61,7 @@ public:
 
     // open csv file for reading
         
-    std::fstream file("q_computed.csv", std::ios::in);
+    std::fstream file("/home/usman/usman-ros/src/skywalker/skywalker/src/joint_angles.csv", std::ios::in);
    
     std::string line = "";    
     while (getline(file, line))

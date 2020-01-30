@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(skywalker)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -14,9 +14,15 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   actionlib
   actionlib_msgs
+  moveit_core
+  moveit_ros_planning
+  moveit_ros_planning_interface
+  tf2_eigen
+  tf2_geometry_msgs
+  
     
 )
-
+find_package(Eigen3 REQUIRED)
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system)
 
@@ -105,9 +111,18 @@ find_package(Boost REQUIRED COMPONENTS system)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
+
+  LIBRARIES
+  INCLUDE_DIRS
+  
   #INCLUDE_DIRS include
   #LIBRARIES skywalker
   CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs actionlib_msgs 
+  moveit_core
+  moveit_ros_planning_interface
+  
+  DEPENDS
+    EIGEN3
   #DEPENDS system_lib
 )
 
@@ -119,6 +134,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 add_executable(action_server src/action_server.cpp)
+
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
@@ -217,6 +233,24 @@ add_executable(skywalker_joint_state src/skywalker_joint_state.cpp)
 target_link_libraries(skywalker_joint_state ${catkin_LIBRARIES})
 add_executable(skywalker_simple_drive src/skywalker_simple_drive.cpp)
 target_link_libraries(skywalker_simple_drive ${catkin_LIBRARIES})
+
+###
+add_executable(robot_model_and_robot_state src/robot_model_and_robot_state.cpp)
+target_link_libraries(robot_model_and_robot_state ${catkin_LIBRARIES})
+##
+add_executable(ik_robot_model_and_robot_state src/ik_robot_model_and_robot_state.cpp)
+target_link_libraries(ik_robot_model_and_robot_state ${catkin_LIBRARIES})
+
+add_executable(read_joints src/read_joints.cpp)
+#### tf2_listener
+add_executable(tf2_listener src/tf2_listener.cpp)
+target_link_libraries(tf2_listener ${catkin_LIBRARIES})
+
+
+
+
+
+target_link_libraries(read_joints ${catkin_LIBRARIES})
 
 
 
