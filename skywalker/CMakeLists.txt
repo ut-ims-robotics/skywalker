@@ -122,7 +122,7 @@ catkin_package(
   moveit_ros_planning_interface
   
   DEPENDS
-    EIGEN3
+  EIGEN3
   #DEPENDS system_lib
 )
 
@@ -132,7 +132,12 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} 
+# ${Boost_INCLUDE_DIRS} ${GLUT_LIBRARY_DIRS}
+# ${OpenGL_LIBRARY_DIRS}${CMAKE_SOURCE_DIR}/matplotpp ${GLUT_INCLUDE_DIRS}
+# /home/usman/bayesopt/utils
+# /home/usman/bayesopt/include
+)
 add_executable(action_server src/action_server.cpp)
 
 
@@ -147,7 +152,9 @@ add_executable(action_server src/action_server.cpp)
  add_dependencies(
  #${PROJECT_NAME} 
  action_server
- ${skywalker_EXPORTED_TARGETS} 
+ ${skywalker_EXPORTED_TARGETS}
+#  bo_branin bayesopt
+ 
  #${catkin_EXPORTED_TARGETS}
 )
 
@@ -171,7 +178,8 @@ add_executable(action_server src/action_server.cpp)
  #${PROJECT_NAME}_node
    action_server
    ${catkin_LIBRARIES}
- )
+  #  bo_branin bayesopt
+    )
 
 #############
 ## Install ##
@@ -246,11 +254,19 @@ add_executable(read_joints src/read_joints.cpp)
 add_executable(tf2_listener src/tf2_listener.cpp)
 target_link_libraries(tf2_listener ${catkin_LIBRARIES})
 
-
-
-
-
 target_link_libraries(read_joints ${catkin_LIBRARIES})
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

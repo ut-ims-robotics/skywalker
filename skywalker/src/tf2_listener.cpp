@@ -27,7 +27,7 @@ int main(int argc, char** argv){
     geometry_msgs::TransformStamped transformStamped;
     try
     {
-      transformStamped = tfBuffer.lookupTransform("base_footprint", "ur5e_tool0",ros::Time(0));
+      transformStamped = tfBuffer.lookupTransform("base_link", "ee_link",ros::Time(0));
       
       std::cout<<transformStamped.transform.translation.x<<std::endl;
       std::cout<<transformStamped.transform.translation.y<<std::endl;

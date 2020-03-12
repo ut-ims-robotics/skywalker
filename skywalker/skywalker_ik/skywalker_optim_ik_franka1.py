@@ -50,28 +50,18 @@ def optim_ik_franka(theta_init, x_e, y_e, z_e, R_e, theta_min, theta_max):
 		q5 = q[4]
 		q6 = q[5]
 		
+		T1 = np.array([[np.cos(q1), -np.sin(q1)*np.cos(alpha1), np.sin(q1)*np.sin(alpha1), a1*np.cos(q1)], [ np.sin(q1), np.cos(q1)*np.cos(alpha1), -np.cos(q1)*np.sin(alpha1), a1*np.sin(q1)], [0.0, np.sin(alpha1), np.cos(alpha1), d1 ], [0.0, 0.0, 0.0, 1.0 ]])
+
+		T2 = np.array([[np.cos(q2), -np.sin(q2)*np.cos(alpha2), np.sin(q2)*np.sin(alpha2), a2*np.cos(q2)], [ np.sin(q2), np.cos(q2)*np.cos(alpha2), -np.cos(q2)*np.sin(alpha2), a2*np.sin(q2)], [0.0, np.sin(alpha2), np.cos(alpha2), d2 ], [0.0, 0.0, 0.0, 1.0 ]])
+
+		T3 = np.array([[np.cos(q3), -np.sin(q3)*np.cos(alpha3), np.sin(q3)*np.sin(alpha3), a3*np.cos(q3)], [ np.sin(q3), np.cos(q3)*np.cos(alpha3), -np.cos(q3)*np.sin(alpha3), a3*np.sin(q3)], [0.0, np.sin(alpha3), np.cos(alpha3), d3 ], [0.0, 0.0, 0.0, 1.0 ]])
+
+		T4 = np.array([[np.cos(q4), -np.sin(q4)*np.cos(alpha4), np.sin(q4)*np.sin(alpha4), a4*np.cos(q4)], [ np.sin(q4), np.cos(q4)*np.cos(alpha4), -np.cos(q4)*np.sin(alpha4), a4*np.sin(q4)], [0.0, np.sin(alpha4), np.cos(alpha4), d4 ], [0.0, 0.0, 0.0, 1.0 ]])
+
+		T5 = np.array([[np.cos(q5), -np.sin(q5)*np.cos(alpha5), np.sin(q5)*np.sin(alpha5), a5*np.cos(q5)], [ np.sin(q5), np.cos(q5)*np.cos(alpha5), -np.cos(q5)*np.sin(alpha5), a5*np.sin(q5)], [0.0, np.sin(alpha5), np.cos(alpha5), d5 ], [0.0, 0.0, 0.0, 1.0 ]])
+
+		T6 = np.array([[np.cos(q6), -np.sin(q6)*np.cos(alpha6), np.sin(q6)*np.sin(alpha6), a6*np.cos(q6)], [ np.sin(q6), np.cos(q6)*np.cos(alpha6), -np.cos(q6)*np.sin(alpha6), a6*np.sin(q6)], [0.0, np.sin(alpha6), np.cos(alpha6), d6 ], [0.0, 0.0, 0.0, 1.0 ]])
 		
-
-
-
-		T1 = np.array([ [np.cos(q1), -np.sin(q1), 0.0, a1  ], [ np.sin(q1)*np.cos(alpha1), np.cos(q1)*np.cos(alpha1), -np.sin(alpha1), -d1*np.sin(alpha1)  ], [ np.sin(q1)*np.sin(alpha1), np.cos(q1)*np.sin(alpha1), np.cos(alpha1), d1*np.cos(alpha1)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-		T2 = np.array([ [np.cos(q2), -np.sin(q2), 0.0, a2  ], [ np.sin(q2)*np.cos(alpha2), np.cos(q2)*np.cos(alpha2), -np.sin(alpha2), -d2*np.sin(alpha2)  ], [ np.sin(q2)*np.sin(alpha2), np.cos(q2)*np.sin(alpha2), np.cos(alpha2), d2*np.cos(alpha2)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-		T3 = np.array([ [np.cos(q3), -np.sin(q3), 0.0, a3  ], [ np.sin(q3)*np.cos(alpha3), np.cos(q3)*np.cos(alpha3), -np.sin(alpha3), -d3*np.sin(alpha3)  ], [ np.sin(q3)*np.sin(alpha3), np.cos(q3)*np.sin(alpha3), np.cos(alpha3), d3*np.cos(alpha3)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-		T4 = np.array([ [np.cos(q4), -np.sin(q4), 0.0, a4  ], [ np.sin(q4)*np.cos(alpha4), np.cos(q4)*np.cos(alpha4), -np.sin(alpha4), -d4*np.sin(alpha4)  ], [ np.sin(q4)*np.sin(alpha4), np.cos(q4)*np.sin(alpha4), np.cos(alpha4), d4*np.cos(alpha4)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-		T5 = np.array([ [np.cos(q5), -np.sin(q5), 0.0, a5  ], [ np.sin(q5)*np.cos(alpha5), np.cos(q5)*np.cos(alpha5), -np.sin(alpha5), -d5*np.sin(alpha5)  ], [ np.sin(q5)*np.sin(alpha5), np.cos(q5)*np.sin(alpha5), np.cos(alpha5), d5*np.cos(alpha5)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-		T6 = np.array([ [np.cos(q6), -np.sin(q6), 0.0, a6  ], [ np.sin(q6)*np.cos(alpha6), np.cos(q6)*np.cos(alpha6), -np.sin(alpha6), -d6*np.sin(alpha6)  ], [ np.sin(q6)*np.sin(alpha6), np.cos(q6)*np.sin(alpha6), np.cos(alpha6), d6*np.cos(alpha6)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-		#T7 = np.array([ [np.cos(q7), -np.sin(q7), 0.0, a7  ], [ np.sin(q7)*np.cos(alpha7), np.cos(q7)*np.cos(alpha7), -np.sin(alpha7), -d7*np.sin(alpha7)  ], [ np.sin(q7)*np.sin(alpha7), np.cos(q7)*np.sin(alpha7), np.cos(alpha7), d7*np.cos(alpha7)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-		#T8 = np.array([ [np.cos(q8), -np.sin(q8), 0.0, a8  ], [ np.sin(q8)*np.cos(alpha8), np.cos(q8)*np.cos(alpha8), -np.sin(alpha8), -d8*np.sin(alpha8)  ], [ np.sin(q8)*np.sin(alpha8), np.cos(q8)*np.sin(alpha8), np.cos(alpha8), d8*np.cos(alpha8)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-
-
 		# T_fin = T1.dot(T2).dot(T3).dot(T4).dot(T5).dot(T6).dot(T7).dot(T8)
 
 		#temp1 = np.dot(T7, T8)
@@ -106,10 +96,7 @@ def optim_ik_franka(theta_init, x_e, y_e, z_e, R_e, theta_min, theta_max):
 		vec_x = T_fin[0][3]-0.26235
 		vec_y = T_fin[1][3]+0.1
 		vec_z = T_fin[2][3]+0.842
-		## ee_link position 
-		#vec_x = T_fin[0][3]+(0.55488)
-		#vec_y = T_fin[1][3]+(0.33418)
-		#vec_z = T_fin[2][3]+(0.90771)
+		
 
 		R= T_fin[0:3, 0:3]
 
@@ -131,7 +118,7 @@ def optim_ik_franka(theta_init, x_e, y_e, z_e, R_e, theta_min, theta_max):
 		#f = np.linalg.norm(q-theta_init)
 		f = np.dot((q-theta_init).T, (q-theta_init))
 
-		cost = 100*(vec_x-x_e)**2+100*(vec_y-y_e)**2+100*(vec_z-z_e)**2+(tr-tr_actual)**2+(ax1-ax1_actual)**2+(ax2-ax2_actual)**2+(ax3-ax3_actual)**2+0.01*f
+		cost = 100*(vec_x-x_e)**2+100*(vec_y-y_e)**2+100*(vec_z-z_e)**2+(tr-tr_actual)**2+(ax1-ax1_actual)**2+(ax2-ax2_actual)**2+(ax3-ax3_actual)**2+0.1*f
 
 		return cost
 

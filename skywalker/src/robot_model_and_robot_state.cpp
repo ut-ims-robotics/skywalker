@@ -33,6 +33,8 @@
  *********************************************************************/
 
 /* Author: Sachin Chitta, Michael Lautman*/
+// #include "testfunctions.hpp"
+// #include "param_loader.hpp"
 
 #include <ros/ros.h>
 
@@ -120,30 +122,28 @@ int main(int argc, char** argv)
   // "panda_link8" which is the most distal link in the
   // "panda_arm" group of the robot.
   // kinematic_state->setToRandomPositions(joint_model_group);
-  kinematic_state->copyJointGroupPositions(joint_model_group, joint_values);
-  for (std::size_t i = 0; i < joint_names.size(); ++i)
-  {
-    ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joint_values[i]);
-  }
-  joint_values[0] = 1;
-  joint_values[1] = 1;
-  joint_values[2] = 2;
-  joint_values[3] = 3;
-  joint_values[4] = 1;
-  joint_values[5] = 1;
+  // kinematic_state->copyJointGroupPositions(joint_model_group, joint_values);
+  // for (std::size_t i = 0; i < joint_names.size(); ++i)
+  // {
+  //   ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joint_values[i]);
+  // }
+  joint_values[0] = 0;
+  joint_values[1] = 0;
+  joint_values[2] = 0;
+  joint_values[3] = 0;
+  joint_values[4] = 0;
+  joint_values[5] = 0;
   
   
   
   kinematic_state->setJointGroupPositions(joint_model_group, joint_values);
-  kinematic_state->copyJointGroupPositions(joint_model_group, joint_values);
+  // kinematic_state->copyJointGroupPositions(joint_model_group, joint_values);
   for (std::size_t i = 0; i < joint_names.size(); ++i)
   {
     ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joint_values[i]);
   }
   
-  ROS_INFO("Current pose: %d", kinematic_state->getJointPositions("ur5e_wrist_1_joint"));
-   ROS_INFO("Current pose: %d", kinematic_state->getJointPositions("ur5e_wrist_2_joint"));
-    ROS_INFO("Current pose: %d", kinematic_state->getJointPositions("ur5e_wrist_3_joint"));
+ 
   const Eigen::Isometry3d& end_effector_state = kinematic_state->getGlobalLinkTransform("ur5e_ee_link");
 
   /* Print end-effector pose. Remember that this is in the model frame */
@@ -186,7 +186,36 @@ int main(int argc, char** argv)
                                reference_point_position, jacobian);
   ROS_INFO_STREAM("Jacobian: \n" << jacobian << "\n");
   // END_TUTORIAL
-
+	
   ros::shutdown();
+
+
+
+
+  // bayesopt::Parameters par;
+  // if(nargc > 1){
+  //   if(!bayesopt::utils::ParamLoader::load(argc[1], par)){
+  //       std::cout << "ERROR: provided file \"" << argc[1] << "\" does not exist" << std::endl;
+  //       return -1;
+  //   }
+  // }
+  // else{
+  //   par = initialize_parameters_to_default();
+  //   par.n_iterations = 190;
+  //   par.random_seed = 0;
+  //   par.verbose_level = 1;
+  //   par.noise = 1e-10;
+  //   //bayesopt::utils::ParamLoader::save("bo_branin.txt", par);
+  // }
+  
+  // BraninNormalized branin(par);
+  // vectord result(2);
+
+  // branin.optimize(result);
+  // std::cout << "Result: " << result << "->" 
+	//     << branin.evaluateSample(result) << std::endl;
+  // branin.printOptimal();
+
+  
   return 0;
 }

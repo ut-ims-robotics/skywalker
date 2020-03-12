@@ -40,26 +40,17 @@ def forward_kinem_franka(q):
 	q6 = q[5]
 	
 
+	T1 = array([[cos(q1), -sin(q1)*cos(alpha1), sin(q1)*sin(alpha1), a1*cos(q1)], [ sin(q1), cos(q1)*cos(alpha1), -cos(q1)*sin(alpha1), a1*sin(q1)], [0.0, sin(alpha1), cos(alpha1), d1 ], [0.0, 0.0, 0.0, 1.0 ]])
 
+	T2 = array([[cos(q2), -sin(q2)*cos(alpha2), sin(q2)*sin(alpha2), a2*cos(q2)], [ sin(q2), cos(q2)*cos(alpha2), -cos(q2)*sin(alpha2), a2*sin(q2)], [0.0, sin(alpha2), cos(alpha2), d2 ], [0.0, 0.0, 0.0, 1.0 ]])
 
+	T3 = array([[cos(q3), -sin(q3)*cos(alpha3), sin(q3)*sin(alpha3), a3*cos(q3)], [ sin(q3), cos(q3)*cos(alpha3), -cos(q3)*sin(alpha3), a3*sin(q3)], [0.0, sin(alpha3), cos(alpha3), d3 ], [0.0, 0.0, 0.0, 1.0 ]])
 
+	T4 = array([[cos(q4), -sin(q4)*cos(alpha4), sin(q4)*sin(alpha4), a4*cos(q4)], [ sin(q4), cos(q4)*cos(alpha4), -cos(q4)*sin(alpha4), a4*sin(q4)], [0.0, sin(alpha4), cos(alpha4), d4 ], [0.0, 0.0, 0.0, 1.0 ]])
 
-	T1 = array([ [cos(q1), -sin(q1), 0.0, a1  ], [ sin(q1)*cos(alpha1), cos(q1)*cos(alpha1), -sin(alpha1), -d1*sin(alpha1)  ], [ sin(q1)*sin(alpha1), cos(q1)*sin(alpha1), cos(alpha1), d1*cos(alpha1)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
+	T5 = array([[cos(q5), -sin(q5)*cos(alpha5), sin(q5)*sin(alpha5), a5*cos(q5)], [ sin(q5), cos(q5)*cos(alpha5), -cos(q5)*sin(alpha5), a5*sin(q5)], [0.0, sin(alpha5), cos(alpha5), d5 ], [0.0, 0.0, 0.0, 1.0 ]])
 
-	T2 = array([ [cos(q2), -sin(q2), 0.0, a2  ], [ sin(q2)*cos(alpha2), cos(q2)*cos(alpha2), -sin(alpha2), -d2*sin(alpha2)  ], [ sin(q2)*sin(alpha2), cos(q2)*sin(alpha2), cos(alpha2), d2*cos(alpha2)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-	T3 = array([ [cos(q3), -sin(q3), 0.0, a3  ], [ sin(q3)*cos(alpha3), cos(q3)*cos(alpha3), -sin(alpha3), -d3*sin(alpha3)  ], [ sin(q3)*sin(alpha3), cos(q3)*sin(alpha3), cos(alpha3), d3*cos(alpha3)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-	T4 = array([ [cos(q4), -sin(q4), 0.0, a4  ], [ sin(q4)*cos(alpha4), cos(q4)*cos(alpha4), -sin(alpha4), -d4*sin(alpha4)  ], [ sin(q4)*sin(alpha4), cos(q4)*sin(alpha4), cos(alpha4), d4*cos(alpha4)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-	T5 = array([ [cos(q5), -sin(q5), 0.0, a5  ], [ sin(q5)*cos(alpha5), cos(q5)*cos(alpha5), -sin(alpha5), -d5*sin(alpha5)  ], [ sin(q5)*sin(alpha5), cos(q5)*sin(alpha5), cos(alpha5), d5*cos(alpha5)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-	T6 = array([ [cos(q6), -sin(q6), 0.0, a6  ], [ sin(q6)*cos(alpha6), cos(q6)*cos(alpha6), -sin(alpha6), -d6*sin(alpha6)  ], [ sin(q6)*sin(alpha6), cos(q6)*sin(alpha6), cos(alpha6), d6*cos(alpha6)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-	#T7 = array([ [cos(q7), -sin(q7), 0.0, a7  ], [ sin(q7)*cos(alpha7), cos(q7)*cos(alpha7), -sin(alpha7), -d7*sin(alpha7)  ], [ sin(q7)*sin(alpha7), cos(q7)*sin(alpha7), cos(alpha7), d7*cos(alpha7)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
-	#T8 = array([ [cos(q8), -sin(q8), 0.0, a8  ], [ sin(q8)*cos(alpha8), cos(q8)*cos(alpha8), -sin(alpha8), -d8*sin(alpha8)  ], [ sin(q8)*sin(alpha8), cos(q8)*sin(alpha8), cos(alpha8), d8*cos(alpha8)   ], [0.0, 0.0, 0.0, 1.0 ]   ])
-
+	T6 = array([[cos(q6), -sin(q6)*cos(alpha6), sin(q6)*sin(alpha6), a6*cos(q6)], [ sin(q6), cos(q6)*cos(alpha6), -cos(q6)*sin(alpha6), a6*sin(q6)], [0.0, sin(alpha6), cos(alpha6), d6 ], [0.0, 0.0, 0.0, 1.0 ]])
 
 
 	T_fin = T1.dot(T2).dot(T3).dot(T4).dot(T5).dot(T6)
@@ -82,10 +73,7 @@ def forward_kinem_franka(q):
 	vec_x = T_fin[0][3]-0.26235
 	vec_y = T_fin[1][3]+0.1
 	vec_z = T_fin[2][3]+0.842
-	## ee_link position 
-	#vec_x = T_fin[0][3]+(0.55488)
-	#vec_y = T_fin[1][3]+(0.33418)
-	#vec_z = T_fin[2][3]+(0.90771)
+	
 	
 
 	R_fin = T_fin[0:3, 0:3]

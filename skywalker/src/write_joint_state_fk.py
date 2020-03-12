@@ -9,7 +9,7 @@ def joint_states_callback(message):
     #for i,name in enumerate(message.name):
         #if name == "joint0":
     pos = message.position
-    writer.writerow([pos[2],pos[3],pos[4],pos[5],pos[6],pos[7]])
+    writer.writerow([pos[4],pos[3],pos[2],pos[5],pos[6],pos[7]])
     print("joint_state",pos)
     
     
@@ -18,9 +18,9 @@ def joint_states_callback(message):
 
 if __name__ == '__main__':
 
-    f = open('/home/usman/usman-ros/src/skywalker/skywalker/src/joint_states.csv', 'w')
+    f = open('/home/usman/usman-ros/src/skywalker/skywalker/src/joint_states_fk.csv', 'w')
     writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
     rospy.init_node("skywalker_joint_State")
-    rospy.Subscriber("joint_states", JointState, joint_states_callback, queue_size=1)
+    rospy.Subscriber("/skywalker/joint_states", JointState, joint_states_callback, queue_size=1)
     rospy.spin()

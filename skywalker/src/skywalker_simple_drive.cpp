@@ -133,6 +133,7 @@ public:
   }
  
 };
+int count = 0;
 
 int main(int argc, char **argv)
 {
@@ -151,6 +152,7 @@ int main(int argc, char **argv)
   //Sets the loop to publish at a rate of 10Hz
   ros::Rate rate(10);
   skywalker_manipulator arm;
+  
   while (ros::ok()) // Keep spinning loop until user presses Ctrl+C
   {    
       
@@ -158,13 +160,28 @@ int main(int argc, char **argv)
     geometry_msgs::Twist vel_msg;
     //set a random linear velocity in the x-axis
     //vel_msg.linear.x =(double)(rand() % 10 +1)/4.0;
-    vel_msg.linear.x = 0.2;
+    
+    if (count % 30 < 15)
+    {
+      vel_msg.linear.x = 0.4;
+      count = count + 1;
+      
+    }
+    else
+    {
+      vel_msg.linear.x = -0.4;
+      count = count + 1;
+      
+      
+    }
+    //std::cout<<"counter"<<count<<std::endl;
+       
     //set a random angular velocity in the z-axis
     //vel_msg.angular.z =(double)(rand() % 10 - 5)/2.0;
-    vel_msg.angular.z = 0.2;
+    //vel_msg.angular.z = 0.2;
 
     //print the content of the message in the terminal
-    ROS_INFO("[Random Walk] linear.x = %.2f, angular.z=%.2f\n", vel_msg.linear.x, vel_msg.angular.z);
+    //ROS_INFO("[Random Walk] linear.x = %.2f, angular.z=%.2f\n", vel_msg.linear.x, vel_msg.angular.z);
     //ROS_INFO("[Random Walk] linear.x = %.2f\n", vel_msg.linear.x);
     //publish the message
 
@@ -172,16 +189,17 @@ int main(int argc, char **argv)
     if(!arm.getState().isDone())
     {
       
-      //usleep(1000);
       //velocity_publisher.publish(vel_msg);
-      std::cout<<"Trying to complete trajectory "<<'\n'<<std::endl;
+      //std::cout<<"Trying to complete trajectory "<<'\n'<<std::endl;
+      //ROS_INFO(" Trying to complete trajectory: linear.x = %.2f\n", vel_msg.linear.x);
       
     }
     else
     {
       // Start the trajectory
       arm.startTrajectory(arm.armExtensionTrajectory());
-      velocity_publisher.publish(vel_msg);
+      //velocity_publisher.publish(vel_msg);
+      //ROS_INFO("[Random Walk] linear.x = %.2f\n", vel_msg.linear.x);
     }
     
   ros::spinOnce(); // Need to call this function often to allow ROS to process incoming messages

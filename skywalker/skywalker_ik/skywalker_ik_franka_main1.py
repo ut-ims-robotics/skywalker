@@ -26,8 +26,8 @@ z_quat_end = my_data[:,5]
 w_quat_end = my_data[:,6]
 
 ######## q_max and q_min values for each joint as given in the website 
-theta_min = array([-180, -180, -180, -180, -180, -180  ])*pi/180
-theta_max = array([ 180,  180,  180,  180, 180, 180  ])*pi/180 
+theta_min = array([-360, -360, -180, -180, -180, -180  ])*pi/180
+theta_max = array([ 360,  360,  180,  180, 180, 180  ])*pi/180 
 
 theta_actual = random.uniform(theta_min, theta_max, 6)
 

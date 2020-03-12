@@ -16,7 +16,7 @@
   />
 <!-- robotiq_2f_85_gripper -->
 <!--xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro" />
-<xacro:robotiq_arg2f_85 prefix="gripper_"/-->
+<xacro:robotiq_arg2f_85 prefix=""/-->
 <!-- support -->
 
  <material name="blue">
@@ -42,13 +42,14 @@
   <joint name="box_ur5e" type="fixed">
     <parent link="box_link"/>
     <child link="ur5e_base_link"/>
-    <!--origin xyz="-0.3 0.1 0.245" rpy="0 0 0"/-->
-        <origin xyz="-0.3 0.1 0.245" rpy="0 0 0"/>
+    <origin xyz="-0.3 0.1 0.245" rpy="0 0 0"/>
   </joint>
-   
+
+
+
 <!--joint name="ur5e_robotiq" type="fixed">
     <parent link="ur5e_tool0"/>
-    <child link="gripper_robotiq_arg2f_base_link"/>
+    <child link="robotiq_arg2f_base_link"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint-->
 
