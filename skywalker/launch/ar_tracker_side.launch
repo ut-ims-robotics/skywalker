@@ -1,0 +1,43 @@
+<launch>
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    <param name="video_device" value="/dev/video3" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="yuyv" />
+    <param name="camera_frame_id" value="camera" />
+	<param name="white_balance_temperature" value="1" />	
+    <param name="io_method" value="mmap"/>
+  </node>
+
+	<arg name="x" default="0.887"/>
+	<arg name="z" default="1.215" />
+	<arg name="y" default="2.334" />
+	
+  <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/usb_cam/image_raw"/>
+    <param name="autosize" value="true" />
+  </node>
+
+<node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="1.315 3.236 1.247 0 3.14 1.57 map camera 100" />
+<!-- <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="$(arg x) $(arg y) $(arg z) 0 3.14 1.57 map camera 100" /> -->
+<!-- <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="$(arg x) $(arg y) $(arg z) 0 0 0 map camera 100" /> -->
+
+	<arg name="marker_size" default="17" />
+	<arg name="max_new_marker_error" default="0.08" />
+	<arg name="max_track_error" default="0.2" />
+	<arg name="cam_image_topic" default="/usb_cam/image_raw" />
+	<arg name="cam_info_topic" default="/usb_cam/camera_info" />
+	<arg name="output_frame" default="/camera" />
+
+	<node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">
+		<param name="marker_size"           type="double" value="$(arg marker_size)" />
+		<param name="max_new_marker_error"  type="double" value="$(arg max_new_marker_error)" />
+		<param name="max_track_error"       type="double" value="$(arg max_track_error)" />
+		<param name="output_frame"          type="string" value="$(arg output_frame)" />
+
+		<remap from="camera_image"  to="$(arg cam_image_topic)" />
+		<remap from="camera_info"   to="$(arg cam_info_topic)" />
+	</node>
+
+</launch>
+

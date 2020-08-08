@@ -1,0 +1,19 @@
+[submodule "skywalker/src/mir_robot"]
+	path = skywalker/src/mir_robot
+	url = https://github.com/dfki-ric/mir_robot
+[submodule "mir_robot"]
+	path = mir_robot
+	url = https://github.com/dfki-ric/mir_robot
+[submodule "Universal_Robots_ROS_Driver"]
+	path = Universal_Robots_ROS_Driver
+	url = https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git
+[submodule "src/fmauch_universal_robot"]
+	path = src/fmauch_universal_robot
+	url = https://github.com/fmauch/universal_robot.git
+	branch = calibration_devel
+[submodule "ar_track_alvar"]
+	path = ar_track_alvar
+	url = https://github.com/ros-perception/ar_track_alvar.git
+[submodule "hrl-kdl"]
+	path = hrl-kdl
+	url = https://github.com/gt-ros-pkg/hrl-kdl.git
