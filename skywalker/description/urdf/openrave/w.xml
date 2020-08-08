@@ -1,7 +1,0 @@
-<robot file="test.dae">
-        <Manipulator name="skywalker">
-          <base>base_link</base>
-          <effector>ur5e_tool0</effector>
-        </Manipulator>
-</robot>
-
