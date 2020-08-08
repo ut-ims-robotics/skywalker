@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+
+<launch>
+  <arg name="gui" default="true" />
+  <arg name="update_rate" default="15" />
+  <arg name="which_result" default="1" />
+  <!-- load MiR URDF -->
+  <include file="/home/usman/usman-ros/src/skywalker/skywalker/description/launch/upload_mir_urdf.launch" />
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <!-- <param name="use_gui" value="$(arg gui)"/> -->
+	 <rosparam param="source_list">[/skywalker/joint_states]</rosparam>
+  </node>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d /home/usman/usman-ros/src/skywalker/skywalker/description/rviz/skywalker_description.rviz" required="true" />
+  <node name="skywalker_joint_publisher" pkg="skywalker" type="reading_mirfranka_traj.py" output="screen"/>
+
+  <param name="theta_file" value="/home/usman/usman-ros/src/skywalker/skywalker/description/arun_stuff/franka_results_rviz$(arg which_result)/franka_visualization$(arg which_result)_theta.mat" />
+  <!--param name="x_file" value="$(find mir_description)/arun_stuff/franka_results_rviz$(arg which_result)/franka_visualization$(arg which_result)_x_base.mat"/>
+  <param name="y_file" value="$(find mir_description)/arun_stuff/franka_results_rviz$(arg which_result)/franka_visualization$(arg which_result)_y_base.mat"/-->
+  <param name="phibase_file" value="/home/usman/usman-ros/src/skywalker/skywalker/description/arun_stuff/franka_results_rviz$(arg which_result)/franka_visualization$(arg which_result)_phi_base.mat"/>
+
+  <!-- THESE ARE EARLIER VERSIONS, KEPT HERE JUST IN CASE
+  <param name="theta_file" value="$(find mir_description)/arun_stuff/franka_results_rviz1/franka_visualization1_theta.mat" />
+  <param name="x_file" value="$(find mir_description)/arun_stuff/franka_results_rviz1/franka_visualization1_x_base.mat"/>
+  <param name="y_file" value="$(find mir_description)/arun_stuff/franka_results_rviz1/franka_visualization1_y_base.mat"/>
+  <param name="phibase_file" value="$(find mir_description)/arun_stuff/franka_results_rviz1/franka_visualization1_phi_base.mat"/>
+  -->
+  <!-- 
+  <param name="theta_file" value="$(find mir_description)/arun_stuff/diffIK_theta_result_franka_alpha_1.0.mat" />
+  <param name="x_file" value="$(find mir_description)/arun_stuff/diffIK_X1_result_franka_alpha_1.0.mat"/>
+  <param name="y_file" value="$(find mir_description)/arun_stuff/diffIK_Y1_result_franka_alpha_1.0.mat"/>
+  <param name="phibase_file" value="$(find mir_description)/arun_stuff/diffIK_phibase_result_franka_alpha_1.0.mat"/>
+  -->
+
+  <param name="update_rate" type = "int" value="$(arg update_rate)"/>
+</launch>

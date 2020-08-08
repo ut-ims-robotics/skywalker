@@ -1,0 +1,42 @@
+arm_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+     - ur5e_shoulder_pan_joint
+     - ur5e_shoulder_lift_joint
+     - ur5e_elbow_joint
+     - ur5e_wrist_1_joint
+     - ur5e_wrist_2_joint
+     - ur5e_wrist_3_joint
+  constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      ur5e_shoulder_pan_joint: {trajectory: 0.1, goal: 0.1}
+      ur5e_shoulder_lift_joint: {trajectory: 0.1, goal: 0.1}
+      ur5e_elbow_joint: {trajectory: 0.1, goal: 0.1}
+      ur5e_wrist_1_joint: {trajectory: 0.1, goal: 0.1}
+      ur5e_wrist_2_joint: {trajectory: 0.1, goal: 0.1}
+      ur5e_wrist_3_joint: {trajectory: 0.1, goal: 0.1}
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  25
+  action_monitor_rate: 10
+joint_group_position_controller:
+  type: position_controllers/JointGroupPositionController
+  joints:
+     - ur5e_shoulder_pan_joint
+     - ur5e_shoulder_lift_joint
+     - ur5e_elbow_joint
+     - ur5e_wrist_1_joint
+     - ur5e_wrist_2_joint
+     - ur5e_wrist_3_joint
+
+# Gripper controller 
+
+#gripper_controller:
+#  type: position_controllers/GripperActionController
+#  joint: robotiq_85_left_knuckle_joint
+#  action_monitor_rate: 20
+#  goal_tolerance: 0.002
+#  max_effort: 100
+#  stall_velocity_threshold: 0.001
+#  stall_timeout: 1.0
+

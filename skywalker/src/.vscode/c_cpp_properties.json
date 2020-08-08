@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/usman/usman-ros/devel/include/**",
+                "/opt/ros/melodic/include/**",
+                "/home/usman/usman-ros/src/actionlib_tutorials/include/**",
+                "/home/usman/usman-ros/src/motion_planning/include/**",
+                "/home/usman/usman-ros/src/universal_robot/ur_kinematics/include/**",
+                "/usr/include/**"
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

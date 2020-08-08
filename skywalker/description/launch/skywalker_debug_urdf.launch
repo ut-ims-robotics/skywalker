@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<launch>
+  <arg name="gui" default="true" />
+
+  <!-- load MiR URDF -->
+  <include file="/home/usman/usman-ros/src/skywalker/skywalker/description/launch/upload_mir_urdf.launch" />
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <!-- <param name="use_gui" value="$(arg gui)"/> -->
+	 <rosparam param="source_list">[/skywalker/joint_states]</rosparam>
+  </node>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d /home/usman/usman-ros/src/skywalker/skywalker/description/rviz/mir_description.rviz" required="true" />
+</launch>
