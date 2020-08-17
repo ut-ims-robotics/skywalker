@@ -43,7 +43,6 @@ After, To implement complete trajectory
 <br />
 ## AR tag tracking library
 ### Install
-<br />
 ``` sudo apt-get install ros-melodic-ar-track-alvar ```
 <br />
 ``` roslaunch skywalker ar_tracker_side.launch ```
