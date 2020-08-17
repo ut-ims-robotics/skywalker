@@ -69,7 +69,7 @@
   <node pkg="rostopic" type="rostopic" name="fake_joint_calibration"
         args="pub /calibrated std_msgs/Bool true" />
 
-  <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0.43518465101552 -0.019281863309862 0 -0.123229130693909 0 0 map odom_comb 100" />
+  <!--node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0 0 0 0 map odom_comb 100" /-->
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find skywalker)/config/skywalker.rviz" required="true" />
 
