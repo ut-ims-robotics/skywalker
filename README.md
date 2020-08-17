@@ -46,8 +46,4 @@ After, To implement complete trajectory
 <br />
 ``` sudo apt-get install ros-melodic-ar-track-alvar ```
 <br />
-To track end-effector trajecory 
-<br />
 ``` roslaunch skywalker ar_tracker_side.launch ```
-<br />
-
