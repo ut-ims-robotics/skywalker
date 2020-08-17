@@ -237,8 +237,8 @@ include_directories(include ${catkin_INCLUDE_DIRS}
 # catkin_add_nosetests(test)
 
 ###
-add_executable(sim_joint_arm_traj src/sim_joint_arm_traj.cpp)
-target_link_libraries(sim_joint_arm_traj ${catkin_LIBRARIES})
+add_executable(sim_arm_joint_traj src/sim_arm_joint_traj.cpp)
+target_link_libraries(sim_arm_joint_traj ${catkin_LIBRARIES})
 
 ###
 add_executable(real_arm_joint_traj src/real_arm_joint_traj.cpp)
