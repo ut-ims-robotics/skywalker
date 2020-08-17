@@ -50,9 +50,9 @@
 #include <sstream>
 #include <vector>
 #include <string>
-#include <Eigen/Dense>
-#include <Eigen/LU> 
-using namespace Eigen;
+// #include <Eigen/Dense>
+// #include <Eigen/LU> 
+// using namespace Eigen;
 
 
 
@@ -146,7 +146,7 @@ int main(int argc, char** argv)
 
   // open csv file for reading
       
-  std::fstream file("/home/usman/usman-ros/src/skywalker/skywalker/src/skywalker_q_5.csv", std::ios::in);
+  std::fstream file("/home/usman/skywalker/skywalker/src/elliptical_traj/skywalker_q_5.csv", std::ios::in);
   
   std::string line = "";    
   while (getline(file, line))
@@ -162,7 +162,7 @@ int main(int argc, char** argv)
     }
   }
   std::ofstream jacobian_file;
-  jacobian_file.open ("/home/usman/usman-ros/src/skywalker/skywalker/src/jacobian_skywalker_5.csv");
+  jacobian_file.open ("/home/usman/skywalker/skywalker/src/elliptical_traj/jacobian_skywalker_5.csv");
   //std::ofstream myfile;
   //myfile.open ("/home/usman/usman-ros/src/skywalker/skywalker/src/joint_angles.csv");
   for (int i = 0 ; i < q.size()/6; i++)

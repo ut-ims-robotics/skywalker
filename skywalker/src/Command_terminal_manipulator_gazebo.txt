@@ -1,1 +1,0 @@
-rostopic pub /arm_controller/command trajectory_msgs/JointTrajectory '{joint_names: ['ur5e_shoulder_pan_joint','ur5e_shoulder_lift_joint','ur5e_elbow_joint','ur5e_wrist_1_joint','ur5e_wrist_2_joint','ur5e_wrist_3_joint'], points: [{ positions: [0,-1.57,1.57,-3.14,-1.57,1.57], time_from_start: {secs: 3}}]}' 

@@ -61,7 +61,7 @@ public:
 
     // open csv file for reading
         
-    std::fstream file1("/home/usman/usman-ros/src/skywalker/skywalker/src/joint_angles.csv", std::ios::in);
+    std::fstream file1("/home/usman/skywalker/skywalker/src/elliptical_traj/joint_angles.csv", std::ios::in);
    
     std::string line1 = "";    
     while (getline(file1, line1))
@@ -155,7 +155,7 @@ int main(int argc, char **argv)
   std::vector<float> x_vel;
 
   // open csv file for reading      
-  std::fstream file2("/home/usman/usman-ros/src/skywalker/skywalker/src/x_vel.csv", std::ios::in);
+  std::fstream file2("/home/usman/skywalker/skywalker/src/elliptical_traj/x_vel.csv", std::ios::in);
   
   std::string line2 = "";    
   while (getline(file2, line2))
@@ -176,7 +176,7 @@ int main(int argc, char **argv)
   std::vector<float> phi_vel;
 
   // open csv file for reading      
-  std::fstream file3("/home/usman/usman-ros/src/skywalker/skywalker/src/phi_vel.csv", std::ios::in);
+  std::fstream file3("/home/usman/skywalker/skywalker/src/elliptical_traj/phi_vel.csv", std::ios::in);
   
   std::string line3 = "";    
   while (getline(file3, line3))

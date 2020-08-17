@@ -124,7 +124,7 @@ int main(int argc, char** argv)
 
   // open csv file for reading
       
-  std::fstream file("/home/usman/usman-ros/src/skywalker/skywalker/src/ur5e_ee_pose.csv", std::ios::in);
+  std::fstream file("/home/usman/skywalker/skywalker/src/elliptical_traj/ur5e_ee_pose.csv", std::ios::in);
   
   std::string line = "";    
   while (getline(file, line))
@@ -141,10 +141,10 @@ int main(int argc, char** argv)
   }
 
     std::ofstream myfile;
-    myfile.open ("/home/usman/usman-ros/src/skywalker/skywalker/src/kdl_joint_angles.csv");
+    myfile.open ("/home/usman/skywalker/skywalker/src/elliptical_traj/kdl_joint_angles.csv");
     // Jacobian
     std::ofstream jacobian_file;
-    jacobian_file.open ("/home/usman/usman-ros/src/skywalker/skywalker/src/jacobian_kdl.csv");
+    jacobian_file.open ("/home/usman/skywalker/skywalker/src/elliptical_traj/jacobian_kdl.csv");
 
   for (int i = 0 ; i < p.size()/7; i++)
     { 

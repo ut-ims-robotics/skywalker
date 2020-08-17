@@ -17,3 +17,7 @@
 [submodule "hrl-kdl"]
 	path = hrl-kdl
 	url = https://github.com/gt-ros-pkg/hrl-kdl.git
+[submodule "fmauch_universal_robot"]
+	path = fmauch_universal_robot
+	url = https://github.com/fmauch/universal_robot.git
+	branch = calibration_devel

@@ -3,7 +3,7 @@ import rospy
 from geometry_msgs.msg import TwistStamped
 from numpy import *
 
-my_data = genfromtxt('/home/usman/usman-ros/src/skywalker/skywalker/src/intial_pose.csv', delimiter=',')
+my_data = genfromtxt('/home/usman/skywalker/skywalker/src/elliptical_traj/intial_pose.csv', delimiter=',')
 
 x = my_data[0,0]
 print "x:", x
@@ -34,7 +34,7 @@ angular_vel = angular_d/t
 def move():
 
     # Starts a new node
-    rospy.init_node('skywalker_intial_pose', anonymous=True)
+    rospy.init_node('skywalker_base_intial_pose', anonymous=True)
     velocity_publisher = rospy.Publisher('/cmd_vel', TwistStamped, queue_size=10)
     vel_msg = TwistStamped()
 ######################################################################################

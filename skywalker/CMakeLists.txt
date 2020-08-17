@@ -235,23 +235,20 @@ include_directories(include ${catkin_INCLUDE_DIRS}
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-add_executable(skywalker_teleop src/skywalker_teleop.cpp)
-target_link_libraries(skywalker_teleop ${catkin_LIBRARIES})
-add_executable(skywalker_joint_state src/skywalker_joint_state.cpp)
-target_link_libraries(skywalker_joint_state ${catkin_LIBRARIES})
-###
-add_executable(joint_position_traj src/joint_position_traj.cpp)
-target_link_libraries(joint_position_traj ${catkin_LIBRARIES})
 
 ###
-add_executable(real_arm_joint_position_traj src/real_arm_joint_position_traj.cpp)
-target_link_libraries(real_arm_joint_position_traj ${catkin_LIBRARIES})
+add_executable(sim_joint_arm_traj src/sim_joint_arm_traj.cpp)
+target_link_libraries(sim_joint_arm_traj ${catkin_LIBRARIES})
+
 ###
-add_executable(simulation_vel_joints_pub src/simulation_vel_joints_pub.cpp)
-target_link_libraries(simulation_vel_joints_pub ${catkin_LIBRARIES})
+add_executable(real_arm_joint_traj src/real_arm_joint_traj.cpp)
+target_link_libraries(real_arm_joint_traj ${catkin_LIBRARIES})
 ###
-add_executable(skywalker_vel_pub_joints_pub_on_real_robot src/skywalker_vel_pub_joints_pub_on_real_robot.cpp)
-target_link_libraries(skywalker_vel_pub_joints_pub_on_real_robot ${catkin_LIBRARIES})
+add_executable(sim_mm_traj src/sim_mm_traj.cpp)
+target_link_libraries(sim_mm_traj ${catkin_LIBRARIES})
+###
+add_executable(real_mm_traj src/real_mm_traj.cpp)
+target_link_libraries(real_mm_traj ${catkin_LIBRARIES})
 ###
 add_executable(robot_model_and_robot_state src/robot_model_and_robot_state.cpp)
 target_link_libraries(robot_model_and_robot_state ${catkin_LIBRARIES})
@@ -259,12 +256,11 @@ target_link_libraries(robot_model_and_robot_state ${catkin_LIBRARIES})
 add_executable(ik_robot_model_and_robot_state src/ik_robot_model_and_robot_state.cpp)
 target_link_libraries(ik_robot_model_and_robot_state ${catkin_LIBRARIES})
 
-add_executable(read_joints src/read_joints.cpp)
 #### tf2_listener
 add_executable(tf2_listener src/tf2_listener.cpp)
 target_link_libraries(tf2_listener ${catkin_LIBRARIES})
 
-target_link_libraries(read_joints ${catkin_LIBRARIES})
+
 
 
 

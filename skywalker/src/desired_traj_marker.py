@@ -5,7 +5,7 @@ from visualization_msgs.msg import Marker
 from geometry_msgs.msg import Point
 from numpy import *
 
-my_data = genfromtxt('/home/usman/usman-ros/src/skywalker/skywalker/src/translation.csv', delimiter=',')
+my_data = genfromtxt('/home/usman/skywalker/skywalker/src/elliptical_traj/elliptical_translation.csv', delimiter=',')
 
 x = my_data[:,0]
 print (len(x))

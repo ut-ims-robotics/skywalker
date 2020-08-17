@@ -21,7 +21,7 @@ int main(int argc, char** argv){
   ros::Rate rate(5.0);
   std::ofstream myfile;
   std::vector<double> p;
-  myfile.open ("/home/usman/usman-ros/src/skywalker/skywalker/src/kdl_elliptical_sim_trans.csv");
+  myfile.open ("/home/usman/skywalker/skywalker/src/elliptical_traj/elliptical_traj_pose.csv");
   while (node.ok())
   {
     geometry_msgs::TransformStamped transformStamped;
