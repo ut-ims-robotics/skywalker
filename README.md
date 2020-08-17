@@ -18,16 +18,17 @@ To set initial pose, which can be done through the commands below:
 <br/>
 
 After, To implement complete trajectory 
-``` rosrun skywalker sim_mm_ee_traj.cpp ```
-
+<br />
+``` rosrun skywalker sim_mm_traj.cpp ```
+<br />
 ## Real Hardware Implementation
 To implement a desired end-effector trajectory on the actual mobile manipualtor hardware
 
-### To Start ROS drivers ( MiR and UR5e)
+### To start ROS drivers on MiR and UR5e 
 1. In the first terminal: <br/>
 ``` roslaunch mir_driver mir.launch ```
 2. In another terminal: <br />
-``` roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=192.168.xx.xxx ```
+``` roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=192.168.x.xxx ```
 
 To set initial pose
 <br />
@@ -37,5 +38,16 @@ To set initial pose
 <br/>
 
 After, To implement complete trajectory 
-``` rosrun skywalker real_mm_ee_traj.cpp ```
+<br />
+``` rosrun skywalker real_mm_traj.cpp ```
+<br />
+## AR tag tracking library
+### Install
+<br />
+``` sudo apt-get install ros-melodic-ar-track-alvar ```
+<br />
+To track end-effector trajecory 
+<br />
+``` roslaunch skywalker ar_tracker_side.launch ```
+<br />
 
