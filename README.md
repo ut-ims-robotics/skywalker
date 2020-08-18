@@ -10,7 +10,7 @@ To implement a desired end-effector trajectory on the mobile manipualtor( skywal
 open a new terminal: <br/>
 ``` roslaunch skywalker skywalker_empty_world.launch ```
 
-To set initial pose, which can be done through the commands below:
+To set initial pose, it can be done through the commands below:
 <br />
 ``` rosrun skywalker intial_mobile_base_pose.py ```
 <br />
