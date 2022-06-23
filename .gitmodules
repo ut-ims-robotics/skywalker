@@ -14,9 +14,6 @@
 [submodule "ar_track_alvar"]
 	path = ar_track_alvar
 	url = https://github.com/ros-perception/ar_track_alvar.git
-[submodule "hrl-kdl"]
-	path = hrl-kdl
-	url = https://github.com/gt-ros-pkg/hrl-kdl.git
 [submodule "fmauch_universal_robot"]
 	path = fmauch_universal_robot
 	url = https://github.com/fmauch/universal_robot.git
