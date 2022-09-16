@@ -16,21 +16,10 @@
   /-->
 
 <!-- ur5e -->
-  <xacro:include filename="$(find ur_e_description)/urdf/ur5e.urdf.xacro" />
-  <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur5e_macro.xacro" />
 
   <!-- arm -->
-  <xacro:arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
-  <xacro:ur5e_robot prefix="ur5e_" joint_limited="true"
-    shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}"
-    shoulder_lift_lower_limit="${-pi}" shoulder_lift_upper_limit="${pi}"
-    elbow_joint_lower_limit="${-pi}" elbow_joint_upper_limit="${pi}"
-    wrist_1_lower_limit="${-pi}" wrist_1_upper_limit="${pi}"
-    wrist_2_lower_limit="${-pi}" wrist_2_upper_limit="${pi}"
-    wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}"
-    transmission_hw_interface="$(arg transmission_hw_interface)"   
-    kinematics_file="${load_yaml('$(arg kinematics_config)')}"
-  />
+  <xacro:ur5e_robot prefix="ur5e_"/>
 
 <!-- support -->
 
