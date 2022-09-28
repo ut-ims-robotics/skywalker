@@ -16,7 +16,7 @@
   /-->
 
 <!-- ur5e -->
-  <xacro:include filename="$(find ur_description)/urdf/inc/ur5e_macro.xacro" />
+  <xacro:include filename="$(find skywalker)/description/urdf/ur5e_macro.xacro" />
 
   <!-- arm -->
   <xacro:ur5e_robot prefix="ur5e_"/>

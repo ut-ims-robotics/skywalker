@@ -1,0 +1,111 @@
+<launch>
+
+  <!-- URDF -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find skywalker)/description/urdf/skywalker.urdf.xacro'" />
+
+  <!-- MiR startup -->
+  <group>
+    <!-- MiR args -->
+    <arg name="mir_type" default="mir_100" doc="The MiR variant. Can be 'mir_100' or 'mir_250' for now." />
+    <arg name="tf_prefix" default="" doc="TF prefix to use for all of MiR's TF frames"/>
+    <arg name="mir_hostname" default="192.168.12.20" />
+    <arg name="disable_map" default="false" doc="Disable the map topic and map -> odom TF transform from the MiR" />
+    <param name="tf_prefix" type="string" value="$(arg tf_prefix)"/>
+
+    <!-- MiR startup -->
+    <node name="tf_remove_state_publisher_frames" pkg="mir_driver" type="tf_remove_child_frames.py" output="screen">
+      <remap from="tf_in"         to="tf_rss" />
+      <remap from="tf_out"        to="/tf" />
+      <remap from="tf_static_in"  to="tf_static_rss" />
+      <remap from="tf_static_out" to="/tf_static" />
+      <rosparam param="remove_frames">
+        - base_link
+        - front_laser_link
+        - back_laser_link
+        - camera_top_link
+        - camera_top_depth_optical_frame
+        - camera_floor_link
+        - camera_floor_depth_optical_frame
+        - imu_link
+      </rosparam>
+    </node>
+
+    <!-- MiR base -->
+    <group if="$(arg disable_map)">
+      <node name="mir_bridge" pkg="mir_driver" type="mir_bridge.py" output="screen">
+        <param name="hostname" value="$(arg mir_hostname)" />
+        <param name="tf_prefix" value="$(arg tf_prefix)" />
+        <remap from="map" to="map_mir" />
+        <remap from="map_metadata" to="map_metadata_mir" />
+        <remap from="rosout" to="/rosout" />
+        <remap from="rosout_agg" to="/rosout_agg" />
+        <remap from="tf" to="tf_mir" />
+      </node>
+
+      <!-- remove the map -> odom TF transform -->
+      <node name="tf_remove_mir_map_frame" pkg="mir_driver" type="tf_remove_child_frames.py" output="screen">
+        <remap from="tf_in"         to="tf_mir" />
+        <remap from="tf_out"        to="/tf" />
+        <rosparam param="remove_frames">
+          - odom
+        </rosparam>
+      </node>
+    </group>
+    <group unless="$(arg disable_map)">
+      <node name="mir_bridge" pkg="mir_driver" type="mir_bridge.py" output="screen">
+        <param name="hostname" value="$(arg mir_hostname)" />
+        <param name="tf_prefix" value="$(arg tf_prefix)" />
+        <remap from="map" to="/map" />
+        <remap from="map_metadata" to="/map_metadata" />
+        <remap from="rosout" to="/rosout" />
+        <remap from="rosout_agg" to="/rosout_agg" />
+        <remap from="tf" to="/tf" />
+      </node>
+    </group>
+
+    <node name="b_rep117_laser_filter" pkg="mir_driver" type="rep117_filter.py" output="screen">
+      <remap from="scan" to="b_scan" />
+      <remap from="scan_filtered" to="b_scan_rep117" />
+    </node>
+
+    <node name="f_rep117_laser_filter" pkg="mir_driver" type="rep117_filter.py" output="screen">
+      <remap from="scan" to="f_scan" />
+      <remap from="scan_filtered" to="f_scan_rep117" />
+    </node>
+
+    <node name="fake_mir_joint_publisher" pkg="mir_driver" type="fake_mir_joint_publisher.py" output="screen" />
+  </group>
+
+  <!-- UR5e -->
+  <group>
+    <arg name="debug" default="false" doc="Debug flag that will get passed on to ur_common.launch"/>
+    <arg name="robot_ip" default="192.168.12.247" doc="IP address by which the robot can be reached."/>
+    <arg name="reverse_ip" default="" doc="IP of the driver, if set to empty it will detect it automatically."/>
+    <arg name="reverse_port" default="50001" doc="Port that will be opened by the driver to allow direct communication between the driver and the robot controller."/>
+    <arg name="script_sender_port" default="50002" doc="The driver will offer an interface to receive the program's URScript on this port. If the robot cannot connect to this port, `External Control` will stop immediately."/>
+    <arg name="trajectory_port" default="50003" doc="Port that will be opened by the driver to allow trajectory forwarding."/>
+    <arg name="tf_prefix" default="ur5e_" doc="tf_prefix used for the robot."/>
+    <arg name="controllers" default="joint_state_controller scaled_pos_joint_traj_controller speed_scaling_state_controller force_torque_sensor_controller" doc="Controllers that are activated by default."/>
+    <arg name="stopped_controllers" default="pos_joint_traj_controller joint_group_vel_controller" doc="Controllers that are initally loaded, but not started."/>
+    <arg name="controller_config_file" default="$(find ur_robot_driver)/config/ur5e_controllers.yaml" doc="Config file used for defining the ROS-Control controllers."/>
+    <!-- <arg name="robot_description_file" default="$(find ur_description)/launch/load_ur5e.launch" doc="Robot description launch file."/> -->
+    <arg name="kinematics_config" default="$(find ur_description)/config/ur5e/skywalker_ur_calibration.yaml" doc="Kinematics config file used for calibration correction. This will be used to verify the robot's calibration is matching the robot_description."/>
+    <arg name="use_tool_communication" default="true" doc="On e-Series robots tool communication can be enabled with this argument"/>
+    <arg name="tool_voltage" default="0" doc="Tool voltage set at the beginning of the UR program. Only used, when `use_tool_communication` is set to true."/>
+    <arg name="tool_parity" default="0" doc="Parity configuration used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+    <arg name="tool_baud_rate" default="115200" doc="Baud rate used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+    <arg name="tool_stop_bits" default="1" doc="Number of stop bits used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+    <arg name="tool_rx_idle_chars" default="1.5" doc="Number of idle chars in RX channel used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+    <arg name="tool_tx_idle_chars" default="3.5" doc="Number of idle chars in TX channel used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+    <arg name="tool_device_name" default="/tmp/ttyUR" doc="Local device name used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+    <arg name="tool_tcp_port" default="54321" doc="Port on which the robot controller publishes the tool comm interface. Only used, when `use_tool_communication` is set to true."/>
+    <arg name="headless_mode" default="false" doc="Automatically send URScript to robot to execute. On e-Series this does require the robot to be in 'remote-control' mode. With this, the URCap is not needed on the robot."/>
+    <arg name="ur_hardware_interface_node_required" default="true" doc="Shut down ros environment if ur_hardware_interface-node dies."/>
+
+    <include file="$(find skywalker)/launch/ur_common.launch" pass_all_args="true" />
+  </group>
+
+  <!-- Nav -->
+  <!-- MoveIt -->
+
+</launch>
