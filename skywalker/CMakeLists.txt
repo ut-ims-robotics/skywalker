@@ -19,8 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   moveit_ros_planning_interface
   tf2_eigen
   tf2_geometry_msgs
-  
-    
+  move_base
 )
 find_package(Eigen3 REQUIRED)
 ## System dependencies are found with CMake's conventions
