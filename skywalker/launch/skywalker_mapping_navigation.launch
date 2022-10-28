@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find skywalker)/launch/skywalker_gmapping.launch">
+    <arg name="prefix" value=""/>
+  </include>
+
+   <!--- Run AMCL --> 
+  <include file="$(find amcl)/examples/amcl_diff.launch" />
+
+  <include file="$(find skywalker)/launch/move_base.launch"/>
+
+</launch>
